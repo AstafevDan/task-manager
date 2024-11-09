@@ -19,5 +19,6 @@ public class User extends AuditingEntity<Long> {
     @Column(unique = true, nullable = false)
     private String username;
 
-    private String password_hash;
+    @Column(name = "password_hash")
+    private String passwordHash;
 }

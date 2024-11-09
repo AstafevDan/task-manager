@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS tasks
     completed BOOLEAN NOT NULL ,
     created_at TIMESTAMP NOT NULL ,
     last_modified_at TIMESTAMP ,
-    user_id INT REFERENCES users (id) ON DELETE CASCADE
+    user_id BIGINT REFERENCES users (id) ON DELETE CASCADE
 )

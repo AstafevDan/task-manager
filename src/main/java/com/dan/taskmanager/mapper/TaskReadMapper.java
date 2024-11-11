@@ -24,6 +24,7 @@ public class TaskReadMapper implements Mapper<Task, TaskReadDto> {
                 from.getId(),
                 from.getTitle(),
                 from.getCompleted(),
+                from.getCreatedAt(),
                 user
         );
     }

@@ -1,0 +1,5 @@
+ext {
+    versions = [
+            'openapi' : '2.6.0'
+    ]
+}

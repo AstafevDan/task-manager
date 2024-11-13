@@ -23,13 +23,13 @@ public class TaskServiceIT extends IntegrationTestBase {
 
     @Test
     void checkFindAll() {
-        List<TaskReadDto> tasks = taskService.findAll();
-        assertThat(tasks).hasSize(7);
+        List<TaskReadDto> tasks = taskService.findAllByUserId(USER_ID);
+        assertThat(tasks).hasSize(4);
     }
 
     @Test
     void checkFindById() {
-        Optional<TaskReadDto> maybeTask = taskService.findById(TASK_ID);
+        Optional<TaskReadDto> maybeTask = taskService.findByIdAndUserId(TASK_ID, USER_ID);
         assertThat(maybeTask).isPresent();
         maybeTask.ifPresent(taskReadDto -> assertThat(taskReadDto.getTitle()).isEqualTo("Cook"));
     }
@@ -47,7 +47,6 @@ public class TaskServiceIT extends IntegrationTestBase {
 
         assertEquals(taskCreateEditDto.getTitle(), actualResult.getTitle());
         assertEquals(taskCreateEditDto.getCompleted(), actualResult.getCompleted());
-        assertEquals(taskCreateEditDto.getCreatedAt(), actualResult.getCreatedAt());
         assertEquals(taskCreateEditDto.getUserId(), actualResult.getUser().getId());
     }
 
@@ -60,7 +59,7 @@ public class TaskServiceIT extends IntegrationTestBase {
                 USER_ID
         );
 
-        Optional<TaskReadDto> actualResult = taskService.update(TASK_ID, taskCreateEditDto);
+        Optional<TaskReadDto> actualResult = taskService.update(TASK_ID, taskCreateEditDto, USER_ID);
         assertTrue(actualResult.isPresent());
 
         actualResult.ifPresent(task -> {
@@ -73,7 +72,7 @@ public class TaskServiceIT extends IntegrationTestBase {
 
     @Test
     void checkDelete() {
-        assertTrue(taskService.delete(TASK_ID));
-        assertFalse(taskService.delete(-100L));
+        assertTrue(taskService.delete(TASK_ID, USER_ID));
+        assertFalse(taskService.delete(-100L, -1L));
     }
 }

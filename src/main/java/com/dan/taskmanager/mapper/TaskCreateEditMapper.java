@@ -25,7 +25,7 @@ public class TaskCreateEditMapper implements Mapper<TaskCreateEditDto, Task> {
     @Override
     public Task map(TaskCreateEditDto from, Task to) {
         copy(from, to);
-        return Mapper.super.map(from, to);
+        return to;
     }
 
     private void copy(TaskCreateEditDto from, Task task) {

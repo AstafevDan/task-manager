@@ -16,6 +16,8 @@ function renderTasks(tasks) {
     tasks.forEach(task => {
         const taskElement = document.createElement("div");
         taskElement.className = "task-item";
+        taskElement.setAttribute("data-id", task.id);
+
         taskElement.innerHTML = `
             <div class="task-info">
                 <div class="task-title">${task.title}</div>
@@ -50,18 +52,25 @@ async function createTask() {
 }
 
 async function toggleComplete(id) {
-    const response = await fetch(`${apiUrl}/${id}`);
-    const task = await response.json();
-    const updatedTask = { ...task, completed: !task.completed };
+    const taskElement = document.querySelector(`.task-item[data-id='${id}']`);
+    const completed = !taskElement.querySelector(".mark-completed").classList.contains("completed");
 
-    const updateResponse = await fetch(`${apiUrl}/${id}`, {
+    const updateResponse = await fetch(`${apiUrl}/${id}/completed`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedTask)
+        body: JSON.stringify({ completed })
     });
 
-    if (updateResponse.ok) await fetchTasks();
+    if (updateResponse.ok) {
+        const button = taskElement.querySelector(".mark-completed");
+        button.classList.toggle("completed", completed);
+        button.textContent = completed ? "Completed" : "Mark as Completed";
+
+        const statusElement = taskElement.querySelector(".task-status");
+        statusElement.textContent = completed ? "Completed" : "Not Completed";
+    }
 }
+
 
 async function deleteTask(id) {
     if (confirm("Are you sure you want to delete this task?")) {
@@ -82,18 +91,11 @@ function closeModal() {
 
 async function updateTask() {
     const title = document.getElementById("update-title").value;
-    const response = await fetch(`${apiUrl}/${currentUpdateId}`);
-    const task = await response.json();
 
-    const updatedTask = {
-        ...task,
-        title
-    };
-
-    const updateResponse = await fetch(`${apiUrl}/${currentUpdateId}`, {
+    const updateResponse = await fetch(`${apiUrl}/${currentUpdateId}/title`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedTask)
+        body: JSON.stringify({ title })
     });
 
     if (updateResponse.ok) {
@@ -101,3 +103,12 @@ async function updateTask() {
         closeModal();
     }
 }
+
+
+function closeModalOnOutsideClick(event) {
+    document.querySelector(".modal-content");
+    if (event.target === document.getElementById("updateModal")) {
+        closeModal();
+    }
+}
+

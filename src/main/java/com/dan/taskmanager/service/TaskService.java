@@ -21,15 +21,15 @@ public class TaskService {
     private final TaskReadMapper taskReadMapper;
     private final TaskCreateEditMapper taskCreateEditMapper;
 
-    public List<TaskReadDto> findAll() {
-        return taskRepository.findAll()
+    public List<TaskReadDto> findAllByUserId(Long userId) {
+        return taskRepository.findByUserId(userId)
                 .stream()
                 .map(taskReadMapper::map)
                 .toList();
     }
 
-    public Optional<TaskReadDto> findById(Long id) {
-        return taskRepository.findById(id).map(taskReadMapper::map);
+    public Optional<TaskReadDto> findByIdAndUserId(Long id, Long userId) {
+        return taskRepository.findByIdAndUserId(id, userId).map(taskReadMapper::map);
     }
 
     @Transactional
@@ -42,16 +42,36 @@ public class TaskService {
     }
 
     @Transactional
-    public Optional<TaskReadDto> update(Long id, TaskCreateEditDto dto) {
-        return taskRepository.findById(id)
+    public Optional<TaskReadDto> update(Long id, TaskCreateEditDto dto, Long userId) {
+        return taskRepository.findByIdAndUserId(id, userId)
                 .map(entity -> taskCreateEditMapper.map(dto, entity))
                 .map(taskRepository::saveAndFlush)
                 .map(taskReadMapper::map);
     }
 
     @Transactional
-    public boolean delete(Long id) {
-        return taskRepository.findById(id)
+    public Optional<TaskReadDto> updateTitle(Long id, String title, Long userId) {
+        return taskRepository.findByIdAndUserId(id, userId)
+                .map(entity -> {
+                    entity.setTitle(title);
+                    return taskRepository.saveAndFlush(entity);
+                })
+                .map(taskReadMapper::map);
+    }
+
+    @Transactional
+    public Optional<TaskReadDto> updateStatus(Long id, Boolean completed, Long userId) {
+        return taskRepository.findByIdAndUserId(id, userId)
+                .map(entity -> {
+                    entity.setCompleted(completed);
+                    return taskRepository.saveAndFlush(entity);
+                })
+                .map(taskReadMapper::map);
+    }
+
+    @Transactional
+    public boolean delete(Long id, Long userId) {
+        return taskRepository.findByIdAndUserId(id, userId)
                 .map(entity -> {
                     taskRepository.delete(entity);
                     taskRepository.flush();

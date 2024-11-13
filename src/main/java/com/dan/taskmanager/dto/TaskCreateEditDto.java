@@ -1,17 +1,21 @@
 package com.dan.taskmanager.dto;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskCreateEditDto {
 
-    String title;
+    private String title;
 
-    Boolean completed;
+    private Boolean completed;
 
-    Instant createdAt;
+    private Instant createdAt;
 
-    Long userId;
+    private Long userId;
 }

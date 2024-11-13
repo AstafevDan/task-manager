@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    Optional<Task> findByTitle(String title);
+    List<Task> findByUserId(Long userId);
 
-    List<Task> findAllByUserId(Long userId);
+    Optional<Task> findByIdAndUserId(Long id, Long userId);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Task t set t.title = :title where t.id in (:ids)")

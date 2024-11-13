@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/authorization_styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Register</h1>
+    <form id="register-form" class="auth-form" onsubmit="validateRegistration(event)">
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required minlength="8">
+
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required minlength="8">
+
+        <button type="button" onclick="validateRegistration(event)">Register</button>
+        <br>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+        <p id="error-message" class="error-message"></p>
+    </form>
+</div>
+<script src="/js/register.js"></script>
+</body>
+</html>
+

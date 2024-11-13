@@ -102,11 +102,11 @@ h1 {
 }
 
 .task-actions .edit {
-    background-color: #ffc107;
+    background-color: #007bff;
 }
 
 .task-actions .edit:hover {
-    background-color: #e0a800;
+    background-color: #0056b3;
 }
 
 .task-actions .delete {

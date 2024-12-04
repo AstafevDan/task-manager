@@ -60,3 +60,5 @@ The application is ready to launch. In the command line at the root of the proje
   ```
 
 Open in your browser the following address: http://localhost:8080/login
+
+You can also view and interact with REST API resources after registration and authorization at the following address: http://localhost:8080/swagger-ui.html

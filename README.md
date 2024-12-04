@@ -24,9 +24,39 @@ This project is implement using the following technologies:
 
 ## Demonstration
 
-Registration and Login
+#### Registration and Login
+
 ![Demonstration](gif-animations/RegistrationAndLogin.gif)<br><br>
-The main functionality
+#### The main functionality
+
 ![Demonstration](gif-animations/Functionality.gif)<br><br>
-Deleting tasks
+#### Deleting tasks
+
 ![Demonstration](gif-animations/DeleteTask.gif)<br><br>
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/AstafevDan/task-manager.git
+
+# Change into the project directory
+cd your-project
+```
+
+Then: 
+  1. Add a file **.env** to the root of the project with the following variables
+     ```
+     DB_URL=(enter your JDBC URL for Postgres)
+     DB_USERNAME=(enter your username)
+     DB_PASSWORD=(enter your password)
+     ```
+  2. Add a directory called secrets to the root of the project. Create files in this directory: db_password.txt with your DB password and db_username.txt with the name of the database user.
+
+The application is ready to launch. In the command line at the root of the project, type (You need Docker installed on your computer):
+  ```bash
+  #Build, create and start containers
+  docker compose up -d
+  ```
+
+Open in your browser the following address: http://localhost:8080/login

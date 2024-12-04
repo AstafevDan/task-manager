@@ -6,7 +6,7 @@ spring:
     url:
     username:
     password:
-    driver-class-name:
+    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:
